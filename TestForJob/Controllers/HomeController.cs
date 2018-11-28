@@ -18,11 +18,11 @@ namespace TestForJob.Controllers
         {
             _repositoryService = repositoryService;
         }
-        public IActionResult Tasks()
+        public IActionResult Tasks(string searchString)
         {
             var tasksViewModel = new TasksViewModel();
             tasksViewModel.Tasks = _repositoryService.GetTaskList();
-
+                        
             var taskViewModel = tasksViewModel.Tasks
                 .Select( x =>
                     new TaskViewModel {
@@ -30,9 +30,14 @@ namespace TestForJob.Controllers
                         Name = x.Name,
                         Description = x.Description });
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                taskViewModel = taskViewModel.Where(s => s.Name.Contains(searchString));
+            }
+
             return View(taskViewModel);
         }
-
+        
         [HttpGet]
         public IActionResult AddTask()
         {

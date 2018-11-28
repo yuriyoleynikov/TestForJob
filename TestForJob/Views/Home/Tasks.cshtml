@@ -10,6 +10,14 @@
 <p>
     <a asp-action="AddTask">Create New Task</a>
 </p>
+
+<form asp-action="Tasks" method="get">
+    <p>
+        Search: <input type="text" name="SearchString">
+        <input type="submit" value="Find" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +34,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {            
+        {
             <tr>
                 <td>
                     @item.Id
